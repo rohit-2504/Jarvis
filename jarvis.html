@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jrvis</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+        user-select: none;
+      font-family: Arial, sans-serif;
+      background:url('Image/270973.jpg') #0c0c0cf1;
+      background-size: cover;
+      color:lime
+    }
+
+    /* Navbar Styling */
+    nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            height: 3px;
+            border-radius: 5px;
+            color:#04cdff;
+            text-decoration: none;
+            padding:5px 20px;
+            transition: background-color .5s;
+        }
+        nav ul li a:hover {
+            background-color: #04cdff67;
+            color:#fff
+        }
+        nav{
+    width: 100%;
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #00000090;
+    backdrop-filter: blur(10px);
+    margin: -40px 0px;
+    padding: 40px 5px ;
+    z-index: 1;
+}nav .logo{
+    width:50px;
+    height: 50px;
+    position: absolute;
+    margin: 20px 90% 0px 0px ;
+    border-radius: 100px;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #000;
+    box-shadow:inset 0px 0px 10px #000;
+}
+    .nav{
+        display: none;
+        width: 20px;
+        transition: .5s;
+        position: absolute;
+        border-radius: 10px;
+        align-self: right;
+        padding: 5px 10px;
+        margin-top: 20px;
+        margin-left: 90%;
+        z-index: 1;
+        font-size: 25px;
+        translate: -20px;
+        cursor: pointer;
+    }
+    nav ul{
+        width:50%;
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        list-style: none;
+        padding: 20px 0px;
+    }
+    header{
+             width:100%;
+            position: fixed;
+            padding: 10px 20px;
+            background:transparent;
+            backdrop-filter: blur(5px);
+            color: #fff;
+            z-index: 1;
+    }
+    /* Responsive Navbar */
+    .menu-toggle {
+      display: none;
+    }
+    #button{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+       justify-content: space-around;
+
+    }
+    #limage{
+        background: #00000085;
+        z-index: -1;
+        position: fixed;
+        margin-top: var(--height);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+    }
+    #limage #x{
+        text-align: right;
+        margin-right: 20px;
+        font-size: 25px;
+    }
+    #limage #image{
+      margin-top: 10px;
+      width:100%;
+      height:auto;
+    }
+   
+    #button button{
+        width:150px;
+        background: #000;
+        font-size: 22px;
+        color:#00a6ff;
+        font-weight: bold;
+        border: 1px solid #fff;
+        padding: 15px;
+        transition: .5s;
+        border-radius: 50px;
+
+    }
+    #button #start{
+     justify-content: end
+    }
+    #button button:hover{
+        transition: .5s;
+        color:#fff;
+        border: 2px solid #000;
+        background: transparent;
+    }
+    #button button{
+        width:250px;
+        background: transparent;
+        color:#00b3ff;
+        font-weight: bold;
+        border: 1px dashed #00b3ff;
+        transition: border .1s .5s;
+    }
+    #button button:hover{
+        color:#fff;
+        transition: .5s;
+        border: 1px solid transparent;
+     
+    }
+    #button button::before{
+        content:" ";
+        width:58px;
+        height:58px;
+        background:linear-gradient(45deg,transparent 50%,#00b3ff 50% );
+        position: absolute;
+        margin: -15px -24px;
+        z-index: -1;
+        border-radius: 50px;
+        border:none;
+        transition: ease-out .5s;
+        opacity: 0;
+
+    }
+    #button button:hover::before{
+        width: 250px;
+        transition:border 1s ;
+        transition: .8s ;
+        border: 1px solid #00b3ff;
+        opacity: 1;
+
+    }
+    #home{
+        display: flex;
+       flex-direction: row;
+       align-items: center;
+       transition: .5s;
+    }
+    #title{
+
+        margin: 50px 60px;
+    width:450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    }
+    main h2{
+        font-size: 150px;
+        color: transparent;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color:#00a2ff;
+        font-weight: bold;
+    }
+    #title p{
+        color:#fff;
+        font-size: 25px;
+    }
+        #image{
+        margin-left: 0px;
+        height: 300px;
+        width:300px;
+        text-align: center;
+    }
+   #home #image img{
+        margin-left: -40px;
+        position: absolute;
+        filter: drop-shadow(0px 0px 10px #000);
+        transition: .3s;
+    }
+   #home #image img:hover{
+        width:350px;
+        transition: .5s;
+        margin: -50px -90px;
+       
+    }
+ #home #image h1{
+        position: absolute;
+        font-size: 250px;
+        margin-left: -15px;
+        color:#fff;  
+    }
+    #home #image h1::before{
+        content:"AI";
+        position: absolute;
+        color: transparent;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color:#fff;
+        padding-top: 0;
+        z-index: 1;
+    }
+    main p{
+        font-size: 30px;
+        font-family:cursive;
+        font-style: italic;
+        color: #fff
+    }
+    section{
+       
+        backdrop-filter: blur(10px);
+        padding: 10px 20px;
+        margin: 20px 0px;
+    }
+    #task{
+       display: flex;
+       flex-direction: column;
+       transition: .5s;
+    }
+    .show{
+        opacity: 1;
+        transition: .5s;
+    }
+    #task #task1{
+        display: flex ;
+        flex-direction: row ;
+        justify-content: space-between ;
+        border:.5px solid #04cdff;
+        padding: 20px 40px;
+        border-radius: 5px 30px;
+    }
+    #task #task2{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding: 20px 40px;
+        border:.5px solid #04cdff;
+        border-radius: 5px 30px;
+
+    }
+    #task #task3{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 50px;
+        padding: 20px 40px;
+        border:.5px solid #04cdff;
+        border-radius: 5px 30px;
+    }  
+    #task1 #text-title p{
+        font-family: monospace;
+        background: transparent;
+        font-size: 15px;
+        width:300px;
+        z-index: 1;
+    }
+    #task1 #image{
+        background: url('Image/oper.png');
+        background-size: cover;
+        width:500px;
+        height:250px;
+        align-self:flex-end;
+    }
+    #task2 #text-title p{
+        font-family: monospace;
+        background: transparent;
+        font-size: 15px;
+        width:300px;
+        z-index: 1;
+    }
+    #task2 #image{
+        align-self: start;
+        background: url('Image/changebg.png');
+        background-size: cover;
+        width:500px;
+        height:300px;
+    }
+    #task2{
+        text-align: right;
+    }
+    #task3 #image{
+        background: url('Image/youtube.png');
+        background-size: cover;
+        width:500px;
+        height:250px;
+        align-self:flex-end
+    }
+    #task3 #text-title p{ 
+        font-family: monospace;
+        background: transparent;
+        font-size: 15px;
+        width:300px;
+        z-index: 1;
+    }
+    header, footer {
+            background-color:transparent;
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        #overview p{
+            color:#fff
+        }
+        h1, h2 {
+            color: #00a6ff;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .feature {
+            margin-bottom: 20px;
+        }
+        .feature p{
+          color:#fff
+        }
+        @media only screen and (max-width:950px) {
+                #home{
+                    flex-direction: column;
+                    align-items: center;
+                }
+    }
+        @media only screen and (max-width:700px) {
+            nav .logo{
+                margin: 20px 85% 0px 0px 
+            }
+                .nav{
+                    display: block;
+                    padding-top: 0px;
+                    font-weight: bold;
+                    color:#fff;
+                    transition: .1;
+                }
+                #button button{
+                padding: 10px;
+                font-size: 15px;
+            }
+         
+            #button button::before{
+             content:" x";
+             padding: 10px;
+             width: 40px;
+             height: auto;
+             margin-top: -10px;
+            margin-left: -50px;
+             color: transparent;
+            
+            }
+            #button  button:hover::before{
+                height: auto;
+                width: 175px;
+            }
+               #task #task1{
+                    flex-direction: column;
+                }
+                #task #task2{
+                    flex-direction: column;
+                }
+                #task #task3{
+                    flex-direction: column;
+                }
+                #task #task1 #image{
+                    width: 100%;
+                    height:200px;
+                    background-size: cover;
+                    overflow: hidden;
+                }
+                #task #task2 #image{
+                    width: 100%;
+                    height:200px;
+                    background-size: cover;
+                    overflow: hidden;
+                }
+                #task #task3 #image{
+                    width: 100%;
+                    height:200px;
+                    background-size: cover;
+                    overflow: hidden;
+                }
+                nav{
+                  justify-content: right;
+                }
+                nav ul {
+                    background: #000 ;  
+                    backdrop-filter: blur(10px);
+                    color:#fff;
+                    position: absolute;
+                    display: none;
+                    justify-content: right;
+                    margin-top: 170px;
+                    margin-right: 0px;
+                    width: 120px;
+                    border-radius: 10px;
+                    height: 150px;
+                    transition: .3s;
+                    border: 1px solid #000;
+                    translate: -20px;
+                    z-index: 1;
+                }
+                nav ul li{
+                    margin: 15px 0;
+                    width:100%;
+                    transition: .5s;
+                    background: transparent;
+                }
+                nav ul li a{
+                    padding: 5px 8px;
+                    width:100%;
+                    border-radius: 5px;
+                    color: #fff;
+                     transition: .5s;
+                     font-weight: bold;
+                }
+              }
+              .contact-section {
+    background-color:transparent;
+    border: 1px solid #ddd;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #00b3ff;;
+    margin-bottom: 15px;
+}
+
+.account-links ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.account-links li a {
+    text-decoration: none;
+    color: #ddd;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    transition:.5s
+}
+.account-links li a:hover {
+    color:#0399b4;
+    transition:.5s
+}
+.account-links li img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.feedback-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-form label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #0399b4;
+}
+
+.feedback-form input, .feedback-form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    background: transparent;
+    color:#fff;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.feedback-form button {
+    padding: 10px;
+    background-color: #0399b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-form button:hover {
+    background-color: #028499;
+}
+
+@media (max-width: 600px) {
+    .account-links ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .account-links li {
+        margin-bottom: 10px;
+    }
+}
+              </style>
+</head>
+<body>
+      <nav>
+      <div class="logo"> <img width="50px" src="Image/saardev.png" alt=""></div>
+    <ul id="menuL">
+        <li><a href="#home" onclick="smooth('nav ul li a')">Home</a></li>
+        <li><a href="#task" onclick="smooth('nav ul li a')">Task</a></li>
+        <li><a href="#features" onclick="smooth('nav ul li a')">Features</a></li>
+        <li><a href="#overview" onclick="smooth('nav ul li a')">Overview</a></li>
+        <li><a href="#contact" onclick="smooth('nav ul li a')">Contact</a></li>
+    </ul>
+<div class="nav" onclick="menuT()">&#9776;
+</div>
+        </nav>
+<main>
+    <section id="home">
+        <div id="title">
+<h2>
+    Jarvis
+</h2>
+<p>Jarvis: All-in-One Utility Tool <br>Smart Arithmatic, Dynamic Background, User Perfromance and Search Memory Intergration</p>
+</div>
+<div id="image">
+    <h1>
+        AI
+    </h1>
+    <img src="Image/aiii.png"  width="250px" alt="">
+</div>
+    </section>
+    <div id="button">
+        <button id="sign" onclick="window.open('Trainer.html')"">Upload Trainer Info</button>
+        <button id="start" onclick="window.open('index.html')"> Get Started &#10233;</button>
+
+    </div>
+    <div id="limage" >
+<div id="x" onclick="showimage()"> &#10005; </div>
+<img id="imageS">
+    </div>
+    <section id="task">
+        <div id="task1">
+        <div id="text-title">
+          <p> 1. This project aims to create a basic calcutator that performs fundamental arithmatic operations: addition,subtraction, multiplaction, division. It take two numberical inputs from the user and then applies the selected operation </p>
+        </div>
+        <div id="image" onclick="showImage(window.getComputedStyle(this).backgroundImage)">
+        </div>
+        </div>
+<br>
+        <div id="task2">
+            <div id="image">
+            </div>
+            <div id="text-title">
+                <p>2. This projext focuses on creating a web application that allows users to change the background image dynamically, providing a rich and intractive experience. This project enhances the user experience by providing full control over the look and feel of the webpage's background, ensuring flexibity, usability and perfromance. </p>
+              </div>
+            </div>
+<br>
+            <div id="task3">
+                <div id="text-title">
+                  <p> 3. This project allows users to perform searches on various platforms like web search engines and YouTube , with the additional functionality of remembering previous search commands for future use. This project enhances user experience by saving previous search commands and intergrating seamless search functionality for both web and YouTube pleatforms.  </p>
+                </div>
+                <div id="image">
+                </div>
+                </div>
+    </section>
+</main>
+
+<div class="container">
+    <section id="overview">
+        <h2>Overview</h2>
+        <p>Jarvis is an advanced utility tool designed to enhance productivity and user experience by integrating multiple functionalities into a single application.</p>
+    </section>
+    <section id="features">
+        <h2>Features</h2>
+        <div class="feature">
+            <h3>Arithmetic Operations</h3>
+            <p>Perform basic arithmetic calculations including addition, subtraction, multiplication, and division. Input two numbers and select the desired operation to receive immediate results.</p>
+        </div>
+        <div class="feature">
+            <h3>Dynamic Background Changes</h3>
+            <p>Change the background image of the application dynamically. Choose from preloaded images or upload your own. Customize the image’s position, tiling, and apply filters like grayscale or sepia.</p>
+        </div>
+        <div class="feature">
+            <h3>Search Command Memory</h3>
+            <p>Save and recall previous web and YouTube search commands. Easily repeat or revisit past searches with a history feature. Autocomplete suggestions based on saved commands for quicker searches.</p>
+        </div>
+        <div class="feature">
+            <h3>User Preferences</h3>
+            <p>Remember user names for personalized interactions. Store user preferences for background images and search commands across sessions.</p>
+        </div>
+        <div class="feature">
+            <h3>File Creation</h3>
+            <p>Create and manage files directly from the application. Save user-generated content or data in various file formats.</p>
+        </div>
+        <div class="feature">
+            <h3>Device Battery Level</h3>
+            <p>Display the current battery level of the device within the app. Keep track of battery status to manage power efficiently.</p>
+        </div>
+        <div class="feature">
+            <h3>User Interface</h3>
+            <p>Intuitive and user-friendly design that integrates all features seamlessly. Responsive layout ensures a consistent experience across devices.</p>
+        </div>
+    </section>
+</div>
+<section id="contact" class="contact-section">
+    <h2>Contact Us</h2>
+    <!-- Account Links Section -->
+    <div class="account-links">
+        <h3>Find Us On</h3>
+        <ul>
+            <li><a href="#" target="_blank"><img src="Image/facebook.png" alt="Facebook">Facebook</a></li>
+            <li><a href="#" target="_blank"><img src="Image/twitter.png" alt="Twitter">Twitter</a></li>
+            <li><a href="#" target="_blank"><img src="Image/instagram.png" alt="Instagram">Instagram</a></li>
+            <li><a href="#" target="_blank"><img src="Image/linkedin.png" alt="LinkedIn">LinkedIn</a></li>
+        </ul>
+    </div>
+    <!-- Feedback Form Section -->
+    <div class="feedback-form">
+        <h3>Send Us Feedback</h3>
+        <form id="feedback-form">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name . . ." required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" placeholder="Enter your email . . ." required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Write your feedback here..." rows="5" required></textarea>
+
+            <button type="submit">Send Feedback</button>
+        </form>
+    </div>
+</section>
+  <script>
+wwidth=window.innerWidth;
+wheight=window.innerHeight;
+
+image=document.getElementById('limage');
+xm=document.getElementById('imageS');
+image.style.width=wwidth+'px';
+image.style.height=wheight+'px';
+if(wwidth<800){
+    document.documentElement.style.setProperty('--height',-wheight+'px')
+}
+else{
+    document.documentElement.style.setProperty('--height',-wheight+270+'px')
+}
+    document.documentElement.style.setProperty('--img','url("image/img3.jpg")')
+   function showimage(){
+         image.style.opacity=0;
+         image.style.zIndex=-1;
+   }
+   function showImage(src){
+    image.style.opacity=1;
+    const cleanedUrl = src.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+    xm.style.background="url('"+cleanedUrl+"')"
+    console.log(cleanedUrl);
+    image.style.zIndex=1;
+   }
+    function change(imag) {
+                im= document.querySelector('.image');
+                im.style.background='transparent';
+                image=imag.querySelector('img').src;
+                document.documentElement.style.setProperty('--img', 'url("' + image + '")');
+                tit=imag.querySelector('.title')
+                titl=document.querySelector('.container .title')
+                titl.innerHTML=tit.innerHTML
+            }
+console.log(window.innerWidth)
+  menu = document.getElementById('menuL');
+  if(window.innerWidth<=700){
+              menu.style.opacity="0";
+  }
+  else{
+              menu.style.opacity="1";
+  }
+          menu.style.height="0px"
+nav=document.querySelector('.nav');
+    function menuT(){
+        if(menu.style.height=="0px"){
+            menu.style.height="200px"
+            menu.style.opacity="1";
+            menu.style.display="block"
+            nav.innerHTML="&#10005;";
+            nav.style.color='#00CCFF'
+            nav.style.marginRight="100px"
+        }
+        else{
+            menu.style.height="0px"
+              menu.style.opacity="0";
+             nav.innerHTML="&#9776;";
+            menu.style.display="none"
+            nav.style.color='#FFDE00'
+             nav.style.marginRight="0px"
+        }
+    }
+    function smooth(nav){
+        document.querySelectorAll(nav).forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    })
+  }
+  animate=document.getElementById('task1')
+  function scroll(){
+    const rect=animate.getBoundingClientRect();
+     windowheigh=window.innerHeight;
+     if(rect.top<windowheigh){
+        animate.classList.add('show')
+     }
+  }
+  window.addEventListener('scroll',scroll)
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="inputT">
+        <span>Choose your input Mode : </span><span>
+             Text  <input value="text" onclick="mode(this.value)" true type="radio" name="inputType">
+             Voice <input onclick="mode(this.value)" value="voice" name="inputType" type="radio" ></span>
+    </div>
+<script id="scrpt" src="index.js">
+</script>
+<main id="main" style="display: none;">
+    <div id="bt">
+        <span id="ll"> 100%</span>
+    </div>
+    <div>
+        <center style="color:#fc0;border:1px solid #fc0;padding: 5px 15px; width:350px" id="wer"> ⚠ First make sure that tha server is started....!  <k id="x" onclick="wer.style.display='none'"> &#10005;</k><br>
+            If not, then no services will be abailable
+        </center>
+<br>
+    <div class="ui-main">
+        
+    <div class="ui-container"> 
+        <div class="ui-text">
+            <h3> 
+            Input 
+            </h3>
+           <h4> - Speak and Be Heard -</h4>
+           <p>Allow users to input commands  or queries through their voice effortlessly.</p>
+           </div>
+           <input type="text" id="inputtext" list="prompt" placeholder="Write here..." style="display: none;"> 
+          <datalist id="prompt">
+            <option value="open youtube">open youtube</option>
+            <option value="search w3school">search w3school</option>
+            <option value="my name">my name</option>
+            <option value="change my name">change my name</option>
+            <option value="set background color white">set background color white</option>
+            <option value="Answer of 5*8">Answer of 5*8</option>
+            <option value="change background image">change background image</option>
+            <option value="Hello Jarvis">Hello Jarvis</option>
+            <option value="create a new file">create a new file</option>
+            <option value="Today's date">Date</option>
+            <option value="Show my charging">Show my charging</option>
+            <option value="remove charging icon">remove charging icon</option>
+            
+            </datalist>
+           <button id="start" onclick="speak()"> Start </button>
+        <div class="ui-out">
+            <div class="ui-in" id="js">
+                <div class="ui-end"></div> 
+                </div>
+        </div>
+        <div class="ui-intext" id="output">....</div>
+        </div>
+    <div class="ui-res" id="bd">
+        <div class="ui-answer"  id="arthmatic"> </div>
+        <div class="ui-intext" id="otpt"> </div>
+<div id="fileli" style="margin-top: 300px; position: absolute; z-index: 1;"> </div>
+
+        <div class="ui1-container"> 
+            <div class="ui-text">
+                <h3> 
+               Assistant Response
+                </h3>
+               <h4> - Your Assistant's Voice -</h4>
+               <p>Clear and Concise responses tailored to user queries.</p>
+    </div>
+    
+
+            <div class="ui-out" id="uiend">
+                <div class="ui-in" id="uiin">
+                    <div class="ui-end" > <!--<svg width="500px" height="1000px" id="sm">
+                        <path d="M225 50 L225 70 L250 70 L300 300 L300 400 L180 400 L180 467 L70 467 " id="bpath" fill="none" stroke="#fff" stroke-width="2" />
+                        <path d="M250 30  L270 30 L320 300 L320 300 L320 420 L200 420 L200 770 L70 770" id="spath" fill="none" stroke="#fff" stroke-width="2" />
+                      
+                              </svg> --> </div> 
+                </div>
+        </div>
+        
+    </div>
+    <script src="ui.js"> </script>
+    <div class="ui-back">
+    <div class="ui-backend">
+        <div class="ui-text">
+            <h3> 
+        Backend Processing
+            </h3>
+           <h4> - The Brain Behind the Voice -</h4>
+           <p>Where data is analyzed and processed to deliver intilligent responses.</p>
+           </div>
+        <div class="ui-out"  id="ed">
+            <div class="ui-in">
+                <div class="ui-end"></div> 
+            </div>
+    </div>
+     </div>
+    <div class="ui-store">
+        <div class="ui-text">
+            <h3> 
+            Data Storage
+            </h3>
+           <h4> - Saving What Matters -</h4>
+           <p>Securely store and manage user data for continuous learning and improvemnet.</p>
+           </div>
+        <div class="ui-out">
+            <div class="ui-in">
+                <div class="ui-end"></div> 
+            </div>
+    </div> <div class="save-data" id="sdata"></div> </div>
+    </div>
+    </div>
+</div>
+</main>
+<link rel="stylesheet" href="index.css">
+   
+</body>
+</html>

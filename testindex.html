@@ -1,0 +1,107 @@
+<!-- <html>
+    <body>
+        
+    </body>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+    const soker = io(); 
+    soker.on('user-details',(result)=>{
+        console.log(result)
+    })
+    data='rohit.2504'
+    soker.emit('savedata',data)
+</script>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Frontend</title>
+    <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.IO client -->
+</head>
+<body>
+    <h1>Socket.IO Frontend</h1>
+    <div>
+        <h2>User Details</h2>
+        <ul id="user-details"></ul>
+    </div>
+    <div>
+        <h2>Database Data</h2>
+        <ul id="database-data"></ul>
+    </div>
+    <div>
+        <h2>Trainer Data</h2>
+        <ul id="trainer-data"></ul>
+    </div>
+    <div>
+        <h2>Save Data</h2>
+        <input type="text" id="save-input" placeholder="Enter data.method">
+        <button onclick="saveData()">Save</button>
+    </div>
+    <div>
+        <h2>Post Trainer Data</h2>
+        <input type="text" id="trainer-input" placeholder="Enter key.value">
+        <button onclick="postTrainerData()">Post</button>
+    </div>
+
+    <script>
+        const socket = io(); // Connect to the server
+
+        // Listen for `user-details` event
+        socket.on('user-details', (data) => {
+            const userDetailsList = document.getElementById('user-details');
+            userDetailsList.innerHTML = ''; // Clear existing list
+            data.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = JSON.stringify(user);
+                userDetailsList.appendChild(li);
+            });
+        });
+
+        // Listen for `getdata` event
+        socket.on('getdata', (data) => {
+            const dbDataList = document.getElementById('database-data');
+            dbDataList.innerHTML = ''; // Clear existing list
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = JSON.stringify(item);
+                dbDataList.appendChild(li);
+            });
+        });
+
+        // Listen for `trainerGet` event
+        socket.on('trainerGet', (data) => {
+            const trainerDataList = document.getElementById('trainer-data');
+            trainerDataList.innerHTML = ''; // Clear existing list
+            data.forEach(trainer => {
+                const li = document.createElement('li');
+                li.textContent = JSON.stringify(trainer);
+                trainerDataList.appendChild(li);
+            });
+        });
+
+        // Function to send `savedata` event
+        function saveData() {
+            const input = document.getElementById('save-input').value;
+            if (input.trim()) {
+                socket.emit('savedata', input);
+                alert('Data sent: ' + input);
+            } else {
+                alert('Please enter valid input.');
+            }
+        }
+
+        // Function to send `trainerPost` event
+        function postTrainerData() {
+            const input = document.getElementById('trainer-input').value;
+            if (input.trim()) {
+                socket.emit('trainerPost', input);
+                alert('Trainer data sent: ' + input);
+            } else {
+                alert('Please enter valid input.');
+            }
+        }
+    </script>
+</body>
+</html>

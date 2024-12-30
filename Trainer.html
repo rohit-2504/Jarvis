@@ -1,0 +1,240 @@
+<html>
+    <head>
+        <title>Trainer</title>
+    </head>
+    <body><!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Save and Retrieve Q&A</title>
+         
+        </head>
+        <body>  
+                    <center style="color:#fc0;border:1px solid #fc0;padding: 5px 15px; width:350px" id="wer"> ⚠ First make sure that tha server is started....!  <k id="x" onclick="wer.style.display='none'"> &#10005;</k><br></center>
+
+            <div class="container">
+                <!-- Section 1: Save Question & Answer -->
+                <div class="save-section">
+                    <h2>Save Your Question & Answer</h2>
+                    <p>Save your questions and answers below for future reference.</p>
+        
+                   Enter Your Question
+                    <input  id="input" placeholder="e.g. What is the capital of France?" >
+        
+                   Enter Your Answer
+                    <input id="ans" placeholder="e.g. The capital of France is Paris." >
+        <br><span id="error" style="color:red"> </span><br>
+                    <button  onclick="abc()">Save Answer</button>
+
+                </div>
+        
+                <!-- Section 2: Retrieve Answer -->
+                <div class="retrieve-section">
+                    <h2>Check Your Answer</h2>
+                    <p>Enter a question to retrieve the saved answer.</p>
+        
+                   Enter Your Question
+                    <input type="text" id="qu1" placeholder="e.g. What is the capital of France?">
+        <br><br>
+                    <button onclick="cba()">Find Answer</button>
+                    <p id="texta"></p>
+                </div>
+            </div>
+        <style>* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #x{
+            color:#fff;
+    position: absolute;
+    margin: -5px 15px; 
+    user-select: none;
+    cursor: pointer;
+}
+        body {
+            padding: 20px 20px;
+            color:#fff;
+             background:  linear-gradient(90deg, #0a0129 75%,#3b92f5 75%, #3b92f5 ,#034091 99%) #010b29; 
+             background-repeat: no-repeat;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .save-section, .retrieve-section {
+            background: linear-gradient(transparent, #034091);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .save-section, .retrieve-section #texta{
+            color:#00a2ff;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-top: 10px;
+            color: #fff;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+         input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: transparent;
+            border: .5px dashed #fff;
+            border-radius: 5px;
+            color:#fff;
+            font-size: 1rem;
+        }
+        
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color : #6200ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0399b4;
+        }
+        
+        #save-message, #answer-display {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        
+        #save-message {
+            color: green;
+        }
+        
+        #answer-display {
+            color: blue;
+        }
+        
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+        </style>
+        
+        </body>
+        </html>
+      
+        <script>
+            answ=document.getElementById('ans');
+            textar=document.getElementById('texta');
+            input=document.getElementById('input');
+            qu1=document.getElementById('qu1')
+           var temp;
+        function abc(){
+            console.log(input.value)
+       fetch('http://localhost:8080/trainerGET')
+       .then(response=>{
+        if(!response.ok){
+            throw new Error(response.status)
+            alert("There is an error :"+response.status)
+        }
+        else{
+            return response.json();
+        }
+       })
+       .then(data=>{
+        console.log(data.length)
+       for(item=0;item<data.length;item++) {
+        item=data[item];
+        ukey=item.key
+        uvalue=answ.value.toLowerCase()
+        console.log(ukey)
+        console.log(input.value)
+        if(input.value.toLowerCase().includes(ukey)){
+            console.log(ukey+'....'+input.value)
+            textar.innerHTML="You can't add duplicate data"
+          temp=false;
+        } 
+        else{
+            temp=true;
+            if(uvalue.length>2){
+                console.log('ok')
+            savedata(uvalue);
+        }
+        }
+        console.log(temp)
+    }
+       })
+    }
+function savedata(uvalue){
+    fetch('http://localhost:8080/trainerPOST',{
+              method: 'POST',
+              header: {
+                'Content-Type': 'text/plain'
+              },
+              body: input.value.toLowerCase()+'.'+uvalue
+            })
+            console.log(input.value+'.'+answ.value)
+    textar.innerHTML=" <font color='green'> Data add succesfully &#10003 </font>"
+        }
+function cba(){
+    fetch('http://localhost:8080/trainerGET')
+       .then(response=>{
+        if(!response.ok){
+            throw new Error(response.status)
+            alert("There is an error :"+response.status)
+        }
+        else{
+            return response.json();
+        }
+       })
+       .then(data=>{
+   for(const item of data){
+    if(qu1.value.includes(item.key)){
+        textar.innerHTML=" <font color='green'>"+item.value;
+        break;
+    }
+    else{
+        textar.innerHTML="<font color='red'><i><u>"+qu1.value+"</u></i> not found</font>"
+    }
+   }
+       })
+}
+  </script>
+        <style>
+            input{
+                margin: 5px 2px 0px 0px;
+            }
+            textarea{
+                margin: 20px 5px; 
+                border: none;
+                outline-style: none;
+            }
+        </style>
+    </body>
+</html>
