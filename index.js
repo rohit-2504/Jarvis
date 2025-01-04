@@ -1,5 +1,3 @@
-const socker = io('http://localhost:8080');
-
  function speak() {
   text=document.getElementById('inputtext')
   _mode=localStorage.getItem('mode')
@@ -149,6 +147,60 @@ function speakText(text, lang ="en-US") {
        speakText(' Answer is '+div);
      }
      }
+     gdata=""
+  
+function rememberData(input) {
+  input = input.trim(); // Normalize input
+  let question = "";
+  let answer = "";
+
+  // Case 1: Starts with "remember"
+  if (input.toLowerCase().startsWith("remember")) {
+      const cleanedInput = input.slice(8).trim(); // Remove "remember"
+      const parts = cleanedInput.split(/ is | are | was | were /); // Split at common linking words
+      if (parts.length === 2) {
+          question = `what is ${parts[0].trim()}`;
+          answer = parts[1].trim();
+      }
+  }
+  // Case 2: Ends with "remember it"
+  else if (input.toLowerCase().endsWith("remember it")) {
+      const cleanedInput = input.slice(0, -11).trim(); // Remove "remember it"
+      const parts = cleanedInput.split(/ is | are | was | were /);
+      if (parts.length === 2) {
+          question = `what is ${parts[0].trim()}`;
+          answer = parts[1].trim();
+      }
+  }
+  // Case 3: Contains "remember" mid-sentence
+  else if (input.toLowerCase().includes("remember")) {
+      const parts = input.split(/ remember /i); // Split at "remember"
+      if (parts.length === 2) {
+          const subParts = parts[1].split(/ is | are | was | were /); // Further split the second part
+          if (subParts.length === 2) {
+              question = `what is ${parts[0].trim()} ${subParts[0].trim()}`;
+              answer = subParts[1].trim();
+          }
+      }
+  }
+  // Case 4: Generic fallback for common patterns
+  else if (/ is | are | was | were /.test(input)) {
+      const parts = input.split(/ is | are | was | were /);
+      if (parts.length === 2) {
+          question = `what is ${parts[0].trim()}`;
+          answer = parts[1].trim();
+      }
+  }
+
+  // Return structured memory or error message
+  if (question && answer) {
+      return { question, answer };
+  } else {
+      return "Invalid input. Ensure your input contains 'remember' or follows common patterns.";
+  }
+}
+  
+
      //function to control the textarea(file)
      function writeStart(){
      a=document.createElement('a');
@@ -301,8 +353,34 @@ function speakText(text, lang ="en-US") {
        } 
        } 
          }
-
-         function checkCondtion(input){
+         function checkCondtion(iinput){
+          input=iinput.toLowerCase();
+          function rem(){
+            fetch('http://localhost:8080/remGET')
+            .then(response=>{
+             if(!response.ok){
+                 throw new Error(response.status)
+             }
+             else{
+                 return response.json();
+             }
+            })
+            .then(data=>{
+        for(const item of data){
+         if(input.includes(item.key)){
+           speakText(item.value);
+           console.log(item.value);
+           item.value=""
+           gdata=false;
+             break;
+         }
+         else{
+           gdata=true;
+         }
+        }
+      });
+      return gdata;
+      }
           console.log("Your Input is : "+input);
           textTyping(input)
          /*Virtual Input*/  // input = "create new file rohit.txt";
@@ -310,6 +388,7 @@ function speakText(text, lang ="en-US") {
          il=res.length;
          ch="";
          last=il-1;
+         ques="";
          rn="";
          search=res.indexOf('search');
          op=res.indexOf('open');
@@ -338,7 +417,7 @@ function speakText(text, lang ="en-US") {
              fd=op
            }
          data='';
-          if(input.includes('Hello') && il<3 || input.includes('Jarvis')&& il<3 || input.includes('hello')&& il<3 ){
+          if(input.includes('hello') && il<3 || input.includes('jarvis')&& il<3 || input.includes('hi')&& il<3 ){
             kya.play();
           speakText(' Good '+wish+' Sir, How can I assist you today?');
             console.log('I am here');
@@ -460,10 +539,9 @@ function speakText(text, lang ="en-US") {
              bt.style.display="flex";
              again=true;
          }
-         else if(input.includes('name') && input.includes('my') || input.includes('naam') && input.includes('mera') ){
+         else if( input.includes('my name') ||  input.includes('mera naam') ){
              if(input.includes('change') || input.includes('Change') || input.includes('Badal') || input.includes('badal') ){
               //  au.lang="hi-IN"
-           //  speakText("  Kya bolun tujhe, chuutiye.."
             again=false;
             setTimeout(function() {
               mod=localStorage.getItem('mode')
@@ -487,6 +565,60 @@ function speakText(text, lang ="en-US") {
                inpu=uname;
                again=true;
              }
+         }
+         else if(input.includes('remember')){
+          const remembered = rememberData(input);
+  console.log("Input:", input);
+  if (typeof remembered === "object") {
+      console.log("Data remembered:", remembered);
+      console.log("Question:", remembered.question);
+      console.log("Answer:", remembered.answer);
+      fetch('http://localhost:8080/remPOST',{
+        method: 'POST',
+        header: {
+          'Content-Type': 'text/plain'
+        },
+        body: remembered.question+'.'+remembered.answer
+      })
+  } else {
+      console.log(remembered); // If there's an error
+  }
+  console.log("-----");
+         }
+         else if(input.includes('what') || input.includes('why') ||input.includes('when') ||input.includes('how') ||input.includes('who')||input.includes('where')){
+      
+       if(rem()){
+        if(input.includes('what')){
+          ques=input.indexOf('what')
+         }
+         else if(input.includes('why')){
+          ques=input.indexOf('why')
+         } 
+         else if(input.includes('when')){
+          ques=input.indexOf('when')
+         } 
+         else if(input.includes('how')){
+          ques=input.indexOf('how')
+         } 
+         else if(input.includes('who')){
+          ques=input.indexOf('who')
+         }
+         else if(input.includes('where')){
+          ques=input.indexOf('where')
+         }
+         else{
+          return 0;
+         }
+         let data; 
+         for (data =ques; data<=last; data++) {
+            ch= ch+" "+res[data];
+            }
+            speakText('Searching on the web '+ ch)
+          window.open('https://www.google.com/search?q='+ch);
+       }
+       else{
+        console.log('-----')
+       }
          }
          else if(input.includes('call') || input.includes('Call') || input.includes('dial') || input.includes('Dial') ){
             if(input.includes('call')){
@@ -573,7 +705,17 @@ function speakText(text, lang ="en-US") {
          }
          else if(input.includes('user')){
            const tb=document.getElementById('tbody');
-             socker.on('user-details',(data)=>{
+               fetch('http://localhost:8080/api/jarvis')
+            .then( resposnse=>{
+             if(!resposnse.ok){
+                speakText(" Connection error. Check you connection")
+               throw new Error('http error '+resposnse.status);
+             }
+             else{
+               return resposnse.json();
+             }
+            })
+            .then(data => {
              showTable();
              console.log(data);
                 lofdata=data.length;
@@ -723,11 +865,16 @@ function speakText(text, lang ="en-US") {
                    else if(input.length>2){
                    gdata=false;
                      console.log('ok')
-               socker.on('trainerGet',(data)=>{
-                data.users.forEach(user => {
-                  console.log(`ID: ${user.id}, Name: ${user.name}, Age: ${user.age}`);
-              });
-                console.log(data)
+                     fetch('http://localhost:8080/trainerGET')
+                .then(response=>{
+                 if(!response.ok){
+                     throw new Error(response.status)
+                 }
+                 else{
+                     return response.json();
+                 }
+                })
+                .then(data=>{
             for(const item of data){
              if(input.includes(item.key)){
                speakText(item.value);
@@ -743,14 +890,26 @@ function speakText(text, lang ="en-US") {
             if(gdata==true){
              getdata(input)
             }
-          })       
+          })
+                .catch(err=>{
+                  setTimeout(() => {
+              document.getElementById('ed').style.animation="re 1.5s linear 5"
+                  }, 5000);
+              document.getElementById('ed').style.animation="uii 1.5s linear infinite"
+    
+                 speakText(" there has an ,"+err);  
+                })      
                      //   aye.play();       
                     }
                //  speakText(' I fail to understand')
          
                }
-               return again;    
+               return again;
+              
          }
+      
+    
+  
      function speechR(again){
       input=""
       bd=document.getElementById('bd');
@@ -788,15 +947,27 @@ function speakText(text, lang ="en-US") {
       }
      console.log(input)
         }
+        
+
+
      }
      function getdata(input){
                  sdata=""
                  smethod=""
-      socker.on('getdata',(data)=>{
-        console.log(data)
-        data.users.forEach(user => {
-          console.log(`ID: ${user.id}, Name: ${user.name}, Age: ${user.age}`);
-      });
+                 fetch('http://localhost:8080/getdata')
+                 .then( resposnse=>{
+         if(!resposnse.ok){
+            speakText(" Connection error. Check you connection")
+            document.getElementById('ed').style.animation="re 1s linear 5"
+            
+           throw new Error('http error '+resposnse.status);
+         }
+         else{
+            console.log('connect succesfuly')
+           return resposnse.json(); 
+         }
+       })
+       .then(data=>{
          data.forEach(item => {
            if(input.includes(item.data)){
             sdata=item.data;
@@ -813,7 +984,7 @@ function speakText(text, lang ="en-US") {
            ufound(input)
          }
          console.log('Data: '+sdata+'\n Method: '+smethod)
-         document.getElementById('bpath').style.animation=" draw 3s linear 1"
+         document.getElementById('bpath').style.animation="draw 3s linear 1"
        })      
        }   
      function ufound(inp){
@@ -850,7 +1021,7 @@ function speakText(text, lang ="en-US") {
                      again=false;
                  checkDB(input,meth)
                  }
-   }
+     }
      function showTable(){
        tb=document.getElementById('data');
        tb.style.display='block'
@@ -858,9 +1029,14 @@ function speakText(text, lang ="en-US") {
      function checkDB(uinput, meth){
           
            again=false;
-           data=uinput+'.'+ meth
-           console.log(data)
-           socker.emit('savedata',data)
+           console.log(uinput, meth)
+           fetch('http://localhost:8080/savedata',{
+                   method: 'POST',
+                   header: {
+                     'Content-Type': 'text/plain'
+                   },
+                   body: uinput+'.'+meth
+                 })
                  document.getElementById('spath').style.animation=" draw 3s linear 1"
                  document.getElementById('bpath').style.animation=" draw 3s linear 1"
                  document.getElementById('sdata').innerHTML="Data Save SuccessFully "
