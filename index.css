@@ -1,9 +1,4 @@
-body{
-    padding: 20px 20px;
-    color:#fff;
-    background:  linear-gradient(90deg, #0a0129 75%,#3b92f5 75%, #3b92f5 ,#034091 99%) #010b29; 
-    background-repeat: no-repeat;
-}
+
 #main{
     transition: height .5s;
 }
@@ -23,6 +18,7 @@ body{
     user-select: none;
     cursor: pointer;
 }
+
 #bt{
         display: none ;
         position: absolute;
@@ -61,18 +57,7 @@ h3{
     display: flex;
     flex-direction: column;
 }
-input[type=text]{
-    width:50%;
-    padding: 3px 10px;
-    color: #3de8ff;
-    background: transparent;
-    border: none;
-    font-family: cursive;
-    border-bottom: 1px dashed #3de8ff;
-    outline: none;
-    font-size: 18px;
-    margin: 10px;
-}
+
 .inputT span{
     font-size: 18px;
     font-weight: bold;
@@ -108,441 +93,26 @@ content:" ";
 position: absolute;
 width: 15px;
 height: 15px;
-margin: 3.2px ;
+margin: 2.5px ;
 margin-left: 3.48px;
 z-index: 2;
 border: 1px solid #fff;
 border-radius: 10px;
 }
+.inputT span:nth-child(1) input::before{
+    margin-left: 0px;
+}
 .inputT span:nth-child(2) input:nth-child(2):before{
-margin-left: 3px;
+margin-left: 3.5px;
 }
-.ui-main{
-    display: flex;
-    flex-direction: row;
-    width:100%;
-    border-radius: 10px;
-    backdrop-filter: blur(15px);
-    background: #00000055;
-    background-size: cover;
-    gap:1em;
-}
-.ui-container{
-    display: flex;
-    flex-direction: column;
-    padding: 1px 5px 1px 30px;
-    height: 100vh;
-    background: linear-gradient(-60deg,#0b7af844,transparent);
-    border: .1px solid none;
-    align-items: center;
-}
-.ui-out{
-    margin: 30px;
-    display: flex;
-    width:200px;
-    height:200px;
-    border: 8px solid #1e7ce7;
-    background: transparent;
-    border-radius: 200px;
-    align-items: center;
-    justify-content: center;
-    /* animation: ui-o 2s linear infinite; */
-}
-@keyframes ui-o{
-    0%{
-        border-width:6px 4px 0px 0px ;
-    }
-    25%{
-        border-width: 0px 6px 4px 0px ;
-    }
-    50%{
-        border-width:0px 0px 6px 4px ;
-    }
-    75%{
-        border-width: 4px 0px 0px 6px ;
-    }
-    100%{
-        border-width:6px 4px 0px 0px ;
-
-    }
-}
-.ui-container .ui-in{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:120px;
-    height: 120px;
-    border-radius: 120px;
-    background: linear-gradient(#3de8ff ,#0076fc);
-     animation: uui 1.5s linear infinite; 
-}
-.ui-in{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:120px;
-    height: 120px;
-    border-radius: 120px;
-    background: linear-gradient(#3de8ff ,#0076fc);
-}
-@keyframes ui{
-    0%{
-        border-radius: 20px 50px 80px 50px;
-    }
-    25%{
-        width:80px;
-        height: 80px;
-        border-radius: 50px 20px 50px 80px;
-    }  
-    50%{
-        border-radius: 80px 50px 20px 50px;
-    }
-    75%{
-        border-radius: 50px 80px 50px 20px;
-        width:120px;
-        height: 120px;
-    }
-    100%{
-        border-radius: 20px 50px 80px 50px;
-    }
-}
-.ui-container button{
-    width:50%;
-    justify-self: center;
-    align-self: center;
-    font-size: 20px;
-    padding: 5px 10px ;
-    background: linear-gradient(-90deg,#034091,#3de8ff);
-    border: none;
-    border-radius: 10px;
-    color:#fff;
-    font-weight: bolder;
-}
-.ui-container .ui-intext{
-    padding: 15px;
-    width: 350px;
-    color:#0c98f5;
-    font-size: 18px;
-    font-weight:thin;
-    font-family: monospace;
- 
-}
-.ui-end{
-    width:30px;
-    height: 30px;
-    border-radius: 100px;
-    box-shadow: 0px 0px 10px #000, inset 0px 0px 10px #000;
-}
-.ui-res{
-    background: url('Image/ui1.jpg');
-    background-size: cover;
-}
-.ui1-container{
-    padding: 10px;
-    display: flex;
-    justify-content:  end;
-    border-radius:0px 20px 0px 0px;
-    backdrop-filter: blur(5px);
-    font-display: row;
-    background-size: cover;
-}
-.ui-res .ui-intext{
-     position: absolute;
-     backdrop-filter: blur(15px);
-     background: #7600fc13;
-     border-radius: 10px;
-     box-shadow: 0px 0px 20px #000;
-     width: 250px;
-     margin-top: 150px;
-     height:100px;
-     z-index: 1;
-}
-.ui-res .ui-answer{
-    position:absolute ;
-    width:150px;
-    height: 80px;
-    margin: 0px 0px;
-   z-index: 1;
-
-}
-.ui-res{
-    padding: 0;
-    width: 100%;
-    border-radius: 30px;
-}
-
-.ui-text{
-        margin: 20px 10px;
-        width: 250px;
-        justify-self: flex-start;
-}
-.ui1-container .ui-out{
-    margin: 120px;     
-    width: 420px;
-    height: 420px;
-    align-self: center;
-    border-radius: 100%;
-    background: linear-gradient(120deg ,#0481f785 ,#03273bcc ,#000000 100%);
-    background-repeat: no-repeat;
-    background-size: cover;
-    border: 8px solid #3bc0f5;
-    border-right: 8px solid #000;
-    border-bottom: 8px solid #000;
-    box-shadow: inset 1px 1px 35px #000;
-}
-@keyframes uiio{
-    0%{
-        transform: rotate(0deg);
-    }
-    50%{
-        transform: rotate(180deg);
-    }
-    100%{
-        transform: rotate(360deg);
-    }
-}
-.ui1-container .ui-in{
-    width: 300px;
-    height: 300px;
-    border-radius: 100%;
-    border: 8px solid #008cff;
-    background: linear-gradient(120deg ,#0481f785 ,#03273bcc ,#000000 100%);
-    border-bottom: 8px solid #000;
-    border-top: 8px solid #000;
-    box-shadow: inset 1px 1px 25px #000000;  
-
-}
-@keyframes uii{
-    0%{
-        transform: rotate(0deg);
-    }
-    50%{
-        transform: rotate(-180deg);
-    }
-    100%{
-        transform: rotate(-360deg);
-    }
-}
-.ui1-container .ui-end{
-    width: 50px;
-    height: 50px ;
-    border: 8px solid #5d3bf5;
-    background: transparent;
-    border-top: 8px solid transparent;          
-}
-.ui-back{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border-radius: 30px;
-    z-index: 0;
-}
-.ui-back .ui-backend .ui-out{
-    border: 5px solid #0065fc;
-    border-bottom: 5px solid transparent;
-    border-top: 5px solid transparent;
-    animation: uii 1.5s linear infinite;
-
-}
-.ui-back .ui-store .ui-out{
-    border: 5px solid #7600fc;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    animation: uii 1.5s linear infinite;
-
-}
-.ui-back .ui-backend .ui-in{
-    background: transparent;
-    border: 5px dashed #5909ee;
-    animation: uio 1.3s linear infinite;
-
-}
-@keyframes re{
-    0%{ background: red;transform: rotate(0deg);}
-    50%{ background: #000;transform: rotate(-180deg);}
-    100%{ background: red;transform: rotate(-360deg);}
-
-}
-.ui-back .ui-store .ui-in{
-    background: transparent;
-    border: 5px dashed #0c98f5;
-    animation: uio 1.3s linear infinite;
-
-
-}
-.ui-back .ui-store .ui-end{
-    background: linear-gradient(#5909ee,#0076fc);
-    box-shadow: inset 0px 0px 15px #000;
-    border: none;
-}
-.ui-back .ui-backend .ui-end{
-    background: linear-gradient(#0c98f5,#0076fc);
-    box-shadow: inset 0px 0px 15px #000;
-    border: none;
-}
-.ui-back .ui-backend .ui-text{
-         margin: 50px 10px;
-         width:100%;
-}
-.ui-back .ui-store .ui-text{
-         margin: 50px 10px;
-         width:100%;
-}
-.ui-back .ui-store .save-data{
-    color: lime;
-    font-weight: bolder;
-    font-size: 15px;
-}
-.ui-back .ui-backend{
-    width:100%;
-    background: linear-gradient(-60deg,#7600fc61,transparent);
-    backdrop-filter: blur(3px);
-}
-.ui-back .ui-store{
-    background: linear-gradient(-60deg, #0065fc61,transparent);
-    backdrop-filter: blur(3px);
-    width:100%;
-    border-radius:0px 0px 30px 0px 
-
-}
-.ui-backend .ui-text h3, .ui-store .ui-text h3{
-    font-weight: bolder;
-    margin-top: -40px;
-    font-size: 25px;
-}
-h4{
-    margin-top: 20px;
-}
-
-@media only screen and (max-width:650px){
-    .ui-res .ui-intext{
-        margin-top: 250px;
-    }
-    .ui-res .ui-answer{
-        margin-top: 150px;
-    }
-    svg{
-        display: flex;
-    opacity: 1;
-
-    }
-}
-
-@media only screen and (max-width:1000px){
-    body{
-        padding: 1px;
-    }
-    svg{
-        display: flex;
-        opacity: 1;
-
-    }
-    .ui-main{
-        flex-direction: column;
-    }
-    .ui1-container{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .ui1-container .ui-out{
-        width:200px;
-        height:200px;
-    }
-    .ui1-container .ui-in{
-        width:150px;
-        height: 150px;
-    }
-    .ui-container{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 60vh;
-        border-radius: 0px 30px 0px 0px  ;
-    }
-    .ui-container button{
-        font-size: 18px;
-    }
-    .ui-container .ui-out{
-        width:90px;
-        height:90px;
-    }
-    .ui-back{
-        flex-direction: column;
-    }
-.ui-container .ui-intext{
-    justify-self:flex-end ;
-width:150px;
-font-size: 15px;
-}
-.ui-container .ui-in{
-    width: 70px;
-    height: 70px;
-    /* animation: uis 1.5s linear infinite; */
-}
-@keyframes uis{
-    0%{
-        border-radius: 20px 50px 80px 50px;
-    }
-    25%{
-        width:80px;
-        height: 80px;
-        border-radius: 50px 20px 50px 80px;
-    }  
-    50%{
-        border-radius: 80px 50px 20px 50px;
-    }
-    75%{
-        border-radius: 50px 80px 50px 20px;
-        width:60px;
-        height: 60px;
-    }
-    100%{
-        border-radius: 20px 50px 80px 50px;
-    }
-}
-.ui-container .ui-end{
-    width: 20px;
-    height: 20px;
-}
-.ui-container .ui-intext{
-    width:70%;
-}
-.ui-back .ui-backend .ui-out {
-    width:100px;
-    height:100px
-}
-.ui-back .ui-backend .ui-in {
-    width:70px;
-    height:70px
-}
-.ui-back .ui-store .ui-out {
-    width:100px;
-    height:100px
-}
-.ui-back .ui-store .ui-in {
-    width:70px;
-    height:70px
-}
-h3{
-    font-size: 25px;
-}
-h4{
-    font-size: 12px;
-}
-}
-#fileli{
-    width:400px;
-    height: 250px;
-}
-
 #savef{
     margin: 20px;
     border-radius: 5px;
     text-decoration: none;
     border: 1px solid #7600fc;
     color:#fff;
-    background: #7600fc;
+    width: fit-content;
+    background: #555;
     padding: 5px 20px;
     cursor: pointer;
     user-select: none;
@@ -551,8 +121,8 @@ h4{
 textarea{
     margin-top: 50px;
     margin-bottom: 5px;
-    width:100%;
-    height:100%;
+    width:90%;
+    height:250px;
     border-radius: 10px;
     padding: 5px 10px;
     border: 1px dashed #5d3bf5;
@@ -578,10 +148,41 @@ textarea{
     stroke-dasharray:1000;
     stroke-dashoffset: 1000;
     animation-delay: 3s;
-    
   }
   @keyframes draw {
     to {
       stroke-dashoffset: 0; /* Fully reveal the stroke */
     }
   }
+  .circle{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 
+        inset 0 0 50px #fff,
+        inset 20px 0 60px violet,
+        inset -20px 0 60px  #0044ff,
+        inset 20px 0 300px violet,
+        0 0 50px #fff,
+        -10px 0 60px violet,
+        10px 0 60px  #0044ff;
+        
+}
+@keyframes spin{
+    0%{ transform: rotate(0deg);}
+    100%{ transform: rotate(360deg);}
+}
+@keyframes pulse {
+    50%{
+        box-shadow: 
+        inset 0 0 100px #fff,
+        inset 40px 0 120px violet,
+        inset -40px 0 120px #0044ff,
+        inset 40px 0 600px violet,
+        0 0 100px #fff,
+        -20px 0 120px violet,
+        20px 0 120px #0044ff;
+    }
+    
+}
