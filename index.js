@@ -1,20 +1,52 @@
- function speak() {
+function show(){
+  micop=document.getElementById("mic-op");
+  micim=document.getElementById("mic-img");
+  micim.style.display="none"
+  micop.style.backdropFilter="blur(10px)";
+  _mode=localStorage.setItem('mode','voice')
+
+  setTimeout(() => {
+      micop.style.background="#eee6"
+      micop.style.clipPath="circle(100% at 50% 50%)";
+      speak(_mode)
+
+
+  }, 400);
+}
+function hide(){
+  micop=document.getElementById("mic-op");
+  micop.style.backdropFilter="blur(0px)";
+  micim=document.getElementById("mic-img");
+
+  setTimeout(() => {
+     micim.style.display="block"
+      micop.style.clipPath="circle(50px at 99% 99%)";
+      micop.style.background="transparent";
+     _mode=localStorage.setItem('mode','text')
+
+  }, 200);
+
+}
+ function speak(_mode) {
   text=document.getElementById('inputtext')
   _mode=localStorage.getItem('mode')
   if(_mode=='text'){
        text.style.display='block'
        text.focus();
-       checkCondtion(text.value)
+       setTimeout(()=>{
+        checkCondtion(text.value)
+  },1000)
   }
   else{
-    text.style.display='none'
       stext= speechR(checkCondtion);
       // if(checkCondtion){
       //   stext= speechR();
       // checkCondtion(stext);
       // }
   }
-  text.value="";
+  setTimeout(()=>{
+    text.value=""
+},1500)
  }
  document.addEventListener('keydown', function(event) {
   if (event.key === 'Enter') {
@@ -23,26 +55,56 @@
     if(_mode=='text'){
          text.style.display='block'
          text.focus();
-         checkCondtion(text.value)
+         setTimeout(()=>{
+          checkCondtion(text.value)
+    },1000)
     }
     else{
-      text.style.display='none'
         stext= speechR(false);
-
     }
-    text.value=""
+    setTimeout(()=>{
+      text.value=""
+},1500)
   }
 });
-  
+/*document.addEventListener('keydown', function(event) {
+document.getElementById('main').style.display='none';
+
+  t=document.getElementById('text')
+  v=document.getElementById('voice')
+  if(document.getElementById('main').style.display=='none'){
+    if(event.key === 't' && event.altkey ) {
+    text=document.getElementById('inputtext')
+    _mode=localStorage.getItem('mode')
+      text.style.display='block'
+      text.focus();
+      checkCondtion(text.value)
+      t.click();
+      document.getElementById('main').style.display='block';
+  }
+  else if(event.key === 'v'&& event.altkey ){
+    text.style.display='none'
+    document.getElementById('main').style.display='block';
+    v.click();
+  }
+  else{
+    document.getElementById('main').style.display='block';
+  }
+}
+});
+*/
 // You can trigger actions based on external input
   function textTyping(ttext){
-    htmloutput=document.getElementById('output');
-    output.innerHTML=ttext;
+    container=document.getElementById('response-c')
+    micoutput=document.getElementById('mic-output')
+    htmloutput=document.createElement('p');
+    container.appendChild(htmloutput);
+  container.style.boderRadius="20px 0px 20px 20px"
+  htmloutput.innerHTML=ttext;   
+  micoutput.innerHTML=ttext;
+ htmloutput.classList.add("right");
+
   }
-  ma= new Audio('audio/maa.mp3');
-     aye= new Audio('audio/aye.mp3');
-     kya=new Audio('audio/kya_hal_h.mp3');
-     khopdi=new Audio('audio/khopdi.mp3');
   function mode(modetype){
    console.log(modetype)
    localStorage.setItem('mode',modetype);
@@ -55,44 +117,51 @@
 }
 else{
  text.style.display='none'
-
 }
   }
+function speakText(text, lang ="en-GB") {
+  const container=document.getElementById('response-c');
+  otpta=document.createElement('p')
+    container.appendChild(otpta);
+    otpta.innerHTML=""
+    if (!text || typeof text !== "string" || text.trim() === "") {
+        console.error("Speech synthesis error: Invalid or empty text.");
+        return;
+    }
+  
  
-
-function speakText(text, lang ="en-US") {
-  const otpta=document.getElementById('otpt');
-  otpta.innerHTML=""
-  if (!text || typeof text !== "string" || text.trim() === "") {
-      console.error("Speech synthesis error: Invalid or empty text.");
-      return;
-  }
-  ui_in=document.getElementById('uiin')
-  ui_end=document.getElementById('uiend')
-  i=0;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang;
   utterance.onstart = () => console.log("Speech synthesis started.");
-  console.log(text)
-  otpta.innerHTML=""
-      function typing(){
-        if(i<text.length){
-          otpta.innerHTML+=text.charAt(i);
-          i++;
-        setTimeout(typing, 20);
-       }}
-       typing();
-      uiend.style.animation='uii 1.5s linear 2';
-      uiin.style.animation='uio .75s linear 4';
+  console.log(text);
+  
+  otpta.innerHTML = "";
+  let i = 0; 
+  function typing() {
+    if (i < text.length) {
+      otpta.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 20);
+    }
+  }
+  typing();
+  
+  otpta.classList.add("left");
+  container.scrollTop = container.scrollHeight;
+  
   utterance.onend = () => console.log("Speech synthesis completed.");
   utterance.onerror = (event) => {
-      console.error("Speech synthesis error occurred:", event.error || "Unknown error");
+    console.error("Speech synthesis error occurred:", event.error || event); // Fix here
   };
   try {
+    if (text === "Processing....") {
+      console.log(text);
+    } else {
       speechSynthesis.cancel(); // Cancel any ongoing utterance
       speechSynthesis.speak(utterance);
+    }
   } catch (error) {
-      console.error("Speech synthesis failed:", error);
+    console.error("Speech synthesis failed:", error);
   }
 }
        // Speech Recognition Handler
@@ -108,13 +177,13 @@ function speakText(text, lang ="en-US") {
      hours=time.getHours();
              wish="";
      if(hours>12 && hours<=16){
-       wish="afternoon"; 
+       wish="Good afternoon! Welcome back. Hope you're having a great day!"; 
      }
      else if(hours>=16 ){
-       wish="evening";
+       wish="Good evening! Welcome back. Relax and enjoy your time!";
      }
      else if(hours>4){
-       wish="morning";
+       wish="Good morning! Welcome back. Hope you have a productive day ahead!";
      }
      //airthmatic operation
      function airthmatic(input){
@@ -147,19 +216,18 @@ function speakText(text, lang ="en-US") {
        speakText(' Answer is '+div);
      }
      }
-     gdata=""
-  
+     gdata="";
+     matchText="";
 function rememberData(input) {
   input = input.trim(); // Normalize input
   let question = "";
   let answer = "";
-
   // Case 1: Starts with "remember"
   if (input.toLowerCase().startsWith("remember")) {
       const cleanedInput = input.slice(8).trim(); // Remove "remember"
       const parts = cleanedInput.split(/ is | are | was | were /); // Split at common linking words
       if (parts.length === 2) {
-          question = `what is ${parts[0].trim()}`;
+          question = `${parts[0].trim()}`;
           answer = parts[1].trim();
       }
   }
@@ -168,7 +236,7 @@ function rememberData(input) {
       const cleanedInput = input.slice(0, -11).trim(); // Remove "remember it"
       const parts = cleanedInput.split(/ is | are | was | were /);
       if (parts.length === 2) {
-          question = `what is ${parts[0].trim()}`;
+          question = `${parts[0].trim()}`;
           answer = parts[1].trim();
       }
   }
@@ -178,7 +246,7 @@ function rememberData(input) {
       if (parts.length === 2) {
           const subParts = parts[1].split(/ is | are | was | were /); // Further split the second part
           if (subParts.length === 2) {
-              question = `what is ${parts[0].trim()} ${subParts[0].trim()}`;
+              question = `${parts[0].trim()} ${subParts[0].trim()}`;
               answer = subParts[1].trim();
           }
       }
@@ -187,11 +255,10 @@ function rememberData(input) {
   else if (/ is | are | was | were /.test(input)) {
       const parts = input.split(/ is | are | was | were /);
       if (parts.length === 2) {
-          question = `what is ${parts[0].trim()}`;
+          question = `${parts[0].trim()}`;
           answer = parts[1].trim();
       }
   }
-
   // Return structured memory or error message
   if (question && answer) {
       return { question, answer };
@@ -199,12 +266,10 @@ function rememberData(input) {
       return "Invalid input. Ensure your input contains 'remember' or follows common patterns.";
   }
 }
-  
-
      //function to control the textarea(file)
      function writeStart(){
      a=document.createElement('a');
-         fileo=document.getElementById('fileli');
+         fileo=document.getElementById('response-c');
          fileo.appendChild(a)
          a.innerHTML="Save File";
          a.setAttribute('id',"savef")
@@ -263,8 +328,7 @@ function rememberData(input) {
      else if(winput.includes('remove file box') || winput.includes('clear screen')){
              speakText(" file removed")
              file.remove();
-       a.remove()
-
+       a.remove();
              mic.start() ;
      }
      else{
@@ -303,11 +367,11 @@ function rememberData(input) {
       speakText(thn+"What should i call you?" );
       username=prompt(thn+"What should i call you?" )
 
-        speakText(" You'd like me to i call your name,"+username+". is that right?");
-        const userResponse = confirm(" You'd like me to i call your name,"+username+". is that right?");
+        speakText("Great! I will call you "+username+". Is that correct??");
+        const userResponse = confirm("Great! I will call you "+username+". Is that correct?");
 
         if (userResponse) {
-          speakText(" Okey. Now i call you "+username);
+          speakText("Alright, "+username+" it is!");
           localStorage.setItem('my name', username)
         } else {
             setname();
@@ -317,8 +381,7 @@ function rememberData(input) {
      function setName(){
        input ="" ;
        console.log('Start...')
-       micro=new webkitSpeechRecognition() ;
-       
+       micro=new webkitSpeechRecognition();
        speakText(thn+"What should i call you?" );
        setTimeout(() => {
          micro.start();
@@ -329,7 +392,7 @@ function rememberData(input) {
       textTyping(input);
        console.log(input);
        if(input.length>0){
-        speakText(" You'd like me to i call your name,"+input+". is that right?");
+        speakText("Great! I will call you "+input+". Is that correct??");
          console.log('name')
          m=new webkitSpeechRecognition()
          setTimeout(() => {
@@ -338,10 +401,9 @@ function rememberData(input) {
          m.onresult=function(event){
           chose=event.results[0][0].transcript;
           cho=chose.toLowerCase();
-    
       textTyping(cho);
           if(cho.includes('ye') || cho.includes('ha') && cho.length>0){
-             speakText(" Okey. Now i call you "+input);
+            speakText("Alright, "+input+" it is!");
              console.log('~/')
              localStorage.setItem('my name', input)
           }
@@ -353,8 +415,14 @@ function rememberData(input) {
        } 
        } 
          }
+         input="";
          function checkCondtion(iinput){
+          textTyping(iinput)
           input=iinput.toLowerCase();
+          if(input.trim()==""){
+          speakText("Oops! It looks like you forgot to enter something. Please try again.")
+          }
+          else{
           function rem(){
             fetch('http://localhost:8080/remGET')
             .then(response=>{
@@ -380,9 +448,37 @@ function rememberData(input) {
         }
       });
       return gdata;
-      }
+      } 
+        function remC(){
+        fetch('http://localhost:8080/remGET')
+        .then(response=>{
+         if(!response.ok){
+             throw new Error(response.status)
+         }
+         else{
+             return response.json();
+         }
+        })
+        .then(data=>{
+    for(const item of data){
+     if(input.includes(item.key)){
+      console.log(item.key)
+      console.log(item.value)
+       speakText('Set background colour '+item.value);
+       bd.style.background=item.value;
+       console.log(item.value);
+       item.value=""
+       gdata=false;
+         break;
+     }
+     else{
+       gdata=true;
+     }
+    }
+  });
+  return gdata;
+  }
           console.log("Your Input is : "+input);
-          textTyping(input)
          /*Virtual Input*/  // input = "create new file rohit.txt";
          res=input.split(' ');
          il=res.length;
@@ -418,12 +514,11 @@ function rememberData(input) {
            }
          data='';
           if(input.includes('hello') && il<3 || input.includes('jarvis')&& il<3 || input.includes('hi')&& il<3 ){
-            kya.play();
-          speakText(' Good '+wish+' Sir, How can I assist you today?');
+          speakText(wish+' How can I assist you today?');
             console.log('I am here');
             again=true;
          }
-         else if(res[il-1]=="youtube" || res[il-1]=="YouTube" && !input.includes('download') || input.includes('youtube') ){
+         else if(res[il-1]=="youtube" && !input.includes('download') || input.includes('youtube') ){
            if(input.includes('search')){
               console.log("You tube");
                  for(data=fd+1;data<where;data++){
@@ -446,13 +541,15 @@ function rememberData(input) {
              again=false;
          }
          else if(input.includes('background') && !input.includes('file')  || input.includes('Background') && !input.includes('value')){
-             if(input.includes('background') ){
                  bg=res.indexOf('background');
-           }
-             else{
-                 bg=res.indexOf('Background');
-             }
-             if(input.includes('color') || input.includes('Color') || input.includes('colour') || input.includes('Colour')){
+                 co=res.indexOf(res[bg+1]);
+                 cool="";
+                 for(c=bg+2;c<il;c++){
+                  cool=cool+res[c]+' ';
+              }
+              console.log(res[bg]+' '+res[co]+' '+cool)
+                if(remC()){
+              if(input.includes('color') || input.includes('Color') || input.includes('colour') || input.includes('Colour')){
                  co=res.indexOf(res[bg+1]);
                  cool="";
                  for(c=bg+2;c<il;c++){
@@ -462,8 +559,8 @@ function rememberData(input) {
                  bd.style.background=cool;
                  speakText(" Set Background colour "+cool)
                  again=true;
-             }
-             else if(input.includes('image') || input.includes('Image')){
+                }
+         else if(input.includes('image') || input.includes('Image')){
                  im= res.indexOf(res[bg + 1]);
                  img=document.createElement('input');
                  img.type='file';
@@ -484,22 +581,31 @@ function rememberData(input) {
                  });
              }
          }
+         else{
+          console.log('-----')
+         }
+        }
          else if(input.includes('download') && input.includes('check')){
-           speakText(" Now you cank play youtube download videos")
+           speakText(" youtube download videos")
            window.open('https://www.youtube.com/feed/downloads')
          }
          else if(input.includes('remove') || input.includes('clear') ){
          bt=document.getElementById('bt');
-    
+          container=document.getElementById*('response-c');
+
            aoutput=document.getElementById('arthmatic')
              tb=document.getElementById('data');
                tbdy=document.getElementById('tbody');
               if(input.includes('file')){
                file.remove();
+               a.remove()
               }
               else if(input.includes('battery')){
-               bt.style.display='none'
+           //    bt.style.display='none'
               }
+              else if(input.includes('chat')){
+                container.textContent=""
+               }
               else if(input.includes('user') || input.includes('table')){
                tb.style.display='none'
               }
@@ -507,10 +613,12 @@ function rememberData(input) {
                aoutput.style.display='none'
               }
               else{
-               bt.style.display='none'
-               tb.style.display='none'
-               aoutput.style.display='none'
+            //   bt.style.display='none'
+              // tb.style.display='none'
+               container.textContent=""
                  file.remove();
+      //         aoutput.style.display='none';
+
               }
                  speakText(" Clearing")
                  again=true;
@@ -550,7 +658,6 @@ function rememberData(input) {
               } else{
                 setName();
               }   
-              
             },2000)
              }
              else{
@@ -569,6 +676,7 @@ function rememberData(input) {
          else if(input.includes('remember')){
           const remembered = rememberData(input);
   console.log("Input:", input);
+  speakText("Got it! I'll remember that");
   if (typeof remembered === "object") {
       console.log("Data remembered:", remembered);
       console.log("Question:", remembered.question);
@@ -585,8 +693,7 @@ function rememberData(input) {
   }
   console.log("-----");
          }
-         else if(input.includes('what') || input.includes('why') ||input.includes('when') ||input.includes('how') ||input.includes('who')||input.includes('where')){
-      
+         else if(input.includes('what') || input.includes('why') ||input.includes('when')||input.includes('can') ||input.includes('my') ||input.includes('how') ||input.includes('who')||input.includes('where')){
        if(rem()){
         if(input.includes('what')){
           ques=input.indexOf('what')
@@ -613,10 +720,16 @@ function rememberData(input) {
          for (data =ques; data<=last; data++) {
             ch= ch+" "+res[data];
             }
-            speakText('Searching on the web '+ ch)
-          window.open('https://www.google.com/search?q='+ch);
+            if(gdata==false){
+
+            }
+            else{
+              window.open('https://www.google.com/search?q='+ch);
+              speakText('Searching on the web '+ ch)
+            }
        }
        else{
+
         console.log('-----')
        }
          }
@@ -661,8 +774,6 @@ function rememberData(input) {
          input.includes('X') || input.includes('x') || input.includes('/') || input.includes('add')
           || input.includes('multipl') || input.includes('division') 
           || input.includes('subtract')  ){
-           aoutput=document.getElementById('arthmatic');
-           aoutput.style.display='block';
            operants=input.match(/\d+/g);
            a=operants[0];
            b=operants[1];
@@ -671,15 +782,13 @@ function rememberData(input) {
            opr=input.indexOf('+');
            sum=Number(a)+Number(b);
            console.log('Answer of : '+ sum);
-           aoutput.innerHTML=input+"<br> <b>"+sum;
-             speakText(' it is,'+sum)
-    
+         
+              kText(' it is,'+sum)
            }
            else{
              opr=input.indexOf('-')
              subtr=a-b;
              console.log('Answer of : '+ subtr);
-           aoutput.innerHTML=input+"<br> <b>"+subtr;
             speakText(' it is,'+subtr);
            }
          }
@@ -688,14 +797,13 @@ function rememberData(input) {
            opr=input.indexOf('*');
            mul=a*b;
            console.log('Answer of is : '+ mul)
-           aoutput.innerHTML=input+"<br> <b>"+mul;
             speakText(' it is,'+mul);
            }
            else{
              opr=input.indexOf('/')
              divi=a/b;
              console.log('Answer of  is: '+ divi)
-           aoutput.innerHTML=input+"<br> <b>"+divi;
+ 
              speakText(' Answer is '+divi);
            }
          }
@@ -720,26 +828,20 @@ function rememberData(input) {
              console.log(data);
                 lofdata=data.length;
                 speakText(" I found "+lofdata+" user")
-         
                  data.forEach(item => {
                  row=document.createElement('tr');
-         
                  idc=document.createElement('td');
                  idc.textContent=item.id;
                  row.appendChild(idc)
-         
                  namec=document.createElement('td');
                  namec.textContent=item.first_name;
                  row.appendChild(namec)
-         
                  emailc=document.createElement('td');
                  emailc.textContent=item.email;
                  row.appendChild(emailc)
-         
                  genderc=document.createElement('td');
                  genderc.textContent=item.gender;
                  row.appendChild(genderc)
-         
                  tb.appendChild(row)
              });
             })
@@ -822,7 +924,7 @@ function rememberData(input) {
                window.open("https://www.google.com/search?q=today's weather ");
               }
               else if(input.includes('create') && input.includes('file')){
-               const filelo=document.getElementById('fileli');
+               const filelo=document.getElementById('response-c');
              file.style.display="block"
                 for(f=fl+1;f<il;f++){
                   filename=filename+res[f];
@@ -902,16 +1004,14 @@ function rememberData(input) {
                      //   aye.play();       
                     }
                //  speakText(' I fail to understand')
-         
                }
                return again;
-              
          }
-      
-    
-  
+         }
+        
      function speechR(again){
       input=""
+        circle=document.getElementById('cir')
       bd=document.getElementById('bd');
       const mic = new webkitSpeechRecognition();
       mic.autoplay=false;
@@ -919,37 +1019,36 @@ function rememberData(input) {
       mic.lang = "en-GB"
        mic.start();
        mic.onstart=function(){
-         js.style.animation="ui 1s linear infinite"
-         js.style.color="white";
+         circle.style.animation=" spin 4s linear infinite, pulse 2s ease-in-out infinite";
         }
        mic.onend=function(){
+        circle.style.animation=" sppin 4s linear infinite, pullse 2s ease-in-out infinite";
            if(again==true){
                setTimeout(function() {
                    mic.stop();
                    mic.start();
                    }, 4000);
-               js.style.animation="ui 2s linear infinite"
+
            }
            else if(again==false) {
                mic.stop();
-               js.style.animation="ed 2s linear infinite";
            }
            else{
                mic.stop();
            }
         }
          mic.onresult = function(event) {
+         circle.style.animation=" sppin 4s linear infinite, pullse 2s ease-in-out infinite";
            i=0;
       input = event.results[0][0].transcript; 
-      checkCondtion(input);
+      setTimeout(()=>{
+       checkCondtion(input)
+ },1000)
       if(checkCondtion==true){
         speechR(true)
       }
      console.log(input)
         }
-        
-
-
      }
      function getdata(input){
                  sdata=""
@@ -988,7 +1087,6 @@ function rememberData(input) {
        })      
        }   
      function ufound(inp){
-       
        speakText(" you trying to search or open in youtube?")
                  meth=""
                  rec=new webkitSpeechRecognition();
@@ -1004,7 +1102,6 @@ function rememberData(input) {
                        setTimeout(() => {
                        window.open("https://www.google.com/search?q="+inp);
                        }, 4000);
-                       
                      }
                      else if(user_input.includes('youtube')){
                        meth="youtube";
@@ -1058,6 +1155,3 @@ function rememberData(input) {
                  console.error(' Error: ',error)
          }
        }
-       // setInterval(() => {
-       //  console.clear()
-      //  }, 60000);
