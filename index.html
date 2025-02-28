@@ -3,120 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="/socket.io/socket.io.js"></script>
-</head>
-<body>
-    <div class="inputT">
-        <span>Choose your input Mode : </span><span>
-             Text  <input value="text" onclick="mode(this.value)" true type="radio" name="inputType">
-             Voice <input onclick="mode(this.value)" value="voice" name="inputType" type="radio" ></span>
-    </div>
-<script id="scrpt" src="index.js">
-</script>
-<main id="main" style="display: none;">
-    <div id="bt">
-        <span id="ll"> 100%</span>
-    </div>
-    <div>
-        <center style="color:#fc0;border:1px solid #fc0;padding: 5px 15px; width:350px" id="wer"> ⚠ First make sure that tha server is started....!  <k id="x" onclick="wer.style.display='none'"> &#10005;</k><br>
-            If not, then no services will be abailable
-        </center>
-<br>
-    <div class="ui-main">
-        
-    <div class="ui-container"> 
-        <div class="ui-text">
-            <h3> 
-            Input 
-            </h3>
-           <h4> - Speak and Be Heard -</h4>
-           <p>Allow users to input commands  or queries through their voice effortlessly.</p>
-           </div>
-           <input type="text" id="inputtext" list="prompt" placeholder="Write here..." style="display: none;"> 
-          <datalist id="prompt">
-            <option value="open youtube">open youtube</option>
-            <option value="search w3school">search w3school</option>
-            <option value="my name">my name</option>
-            <option value="change my name">change my name</option>
-            <option value="set background color white">set background color white</option>
-            <option value="Answer of 5*8">Answer of 5*8</option>
-            <option value="change background image">change background image</option>
-            <option value="Hello Jarvis">Hello Jarvis</option>
-            <option value="create a new file">create a new file</option>
-            <option value="Today's date">Date</option>
-            <option value="Show my charging">Show my charging</option>
-            <option value="remove charging icon">remove charging icon</option>
-            
-            </datalist>
-           <button id="start" onclick="speak()"> Start </button>
-        <div class="ui-out">
-            <div class="ui-in" id="js">
-                <div class="ui-end"></div> 
-                </div>
-        </div>
-        <div class="ui-intext" id="output">....</div>
-        </div>
-    <div class="ui-res" id="bd">
-        <div class="ui-answer"  id="arthmatic"> </div>
-        <div class="ui-intext" id="otpt"> </div>
-<div id="fileli" style="margin-top: 300px; position: absolute; z-index: 1;"> </div>
-
-        <div class="ui1-container"> 
-            <div class="ui-text">
-                <h3> 
-               Assistant Response
-                </h3>
-               <h4> - Your Assistant's Voice -</h4>
-               <p>Clear and Concise responses tailored to user queries.</p>
-    </div>
-    
-
-            <div class="ui-out" id="uiend">
-                <div class="ui-in" id="uiin">
-                    <div class="ui-end" > <!--<svg width="500px" height="1000px" id="sm">
-                        <path d="M225 50 L225 70 L250 70 L300 300 L300 400 L180 400 L180 467 L70 467 " id="bpath" fill="none" stroke="#fff" stroke-width="2" />
-                        <path d="M250 30  L270 30 L320 300 L320 300 L320 420 L200 420 L200 770 L70 770" id="spath" fill="none" stroke="#fff" stroke-width="2" />
-                      
-                              </svg> --> </div> 
-                </div>
-        </div>
-        
-    </div>
-    <script src="ui.js"> </script>
-    <div class="ui-back">
-    <div class="ui-backend">
-        <div class="ui-text">
-            <h3> 
-        Backend Processing
-            </h3>
-           <h4> - The Brain Behind the Voice -</h4>
-           <p>Where data is analyzed and processed to deliver intilligent responses.</p>
-           </div>
-        <div class="ui-out"  id="ed">
-            <div class="ui-in">
-                <div class="ui-end"></div> 
-            </div>
-    </div>
-     </div>
-    <div class="ui-store">
-        <div class="ui-text">
-            <h3> 
-            Data Storage
-            </h3>
-           <h4> - Saving What Matters -</h4>
-           <p>Securely store and manage user data for continuous learning and improvemnet.</p>
-           </div>
-        <div class="ui-out">
-            <div class="ui-in">
-                <div class="ui-end"></div> 
-            </div>
-    </div> <div class="save-data" id="sdata"></div> </div>
-    </div>
-    </div>
-</div>
-</main>
+    <title>Test Page</title>
+    <script src="index.js"></script>
 <link rel="stylesheet" href="index.css">
+<style>
+
+        body{
+            background: url('./Image/background.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            transition: .5s;
+            height: 100%;
+            
+        }
+        .input-bar{
+            margin-top: calc(100vh - 100px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background:#111;
+            transition: margin-top .4s;
+            padding: 15px 8px;
+            border-radius: 5px;
+            user-select: none;
+            box-shadow: 2px 2px 10px #444;
+        }
+        button, input{
+            transition: .5s;
+            background: #fff;
+            border: none;
+            border-radius: 100px;
+            box-shadow: 0px 0px 7px #000;
+        }
+        button:hover{
+           transition: .5s;
+            background: #ccc;
+            border: none;
+            border-radius: 100px;
+            box-shadow: 0px 0px 7px #000;
+
+        }
+        input{
+            font-size: 16px;
+            height:40px;
+            padding: 0 10px;
+            width: 70%;
+        }
+        @media (max-width: 500px) {
+            input{
+                width: 50%;
+            }
+        }
+        @media (min-width: 750px){
+            input{
+                width: 500px;
+                margin: 0 50px;
+            }
+            .input-bar{
+                justify-content: right;
+            }
+            .submit{
+                margin: 0 50px 0 10px;
+            }
+
+        }
+        .jarvis{
+            color:#eee;
+            font-weight: bolder;
+            font-size: 18px;
+        }
+.submit{
+    width:40px;
+    height:40px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0044ff;
+    animation: pulse-b 3s linear infinite;
+    font-size: 28px;
+    padding: 0 0 2px 5px;
    
+}
+.sumbit:hover{
+    background: #444;
+    transition: .4s;
+}
+.mic-option{
+    color: #222;
+    width: calc(100% - 20px);
+    height: 50vh;
+    position: absolute;
+    background: none;
+    display: flex;
+    padding-bottom: 5px;
+    transition: .5s;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-size: cover;
+    text-align: center;
+    border-radius:20px;
+   clip-path: circle(50px at 99.5% 99.5%); 
+    margin-top:calc(-50vh + 50px );
+}
+@media (min-width:800px) {
+    .mic-option{
+   clip-path: circle(50px at 99.5% 99.5%); 
+    }
+}
+@keyframes show {
+ 100%{  clip-path: circle(100% at 50% 50%); background-color: #eee4;}
+}
+@keyframes hide {
+ 100%{  clip-path: circle(6% at 98% 98%); background: transparent;}
+}
+.animation{
+    height: 50vh;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+}
+.button{
+    margin-top: calc(50vh - 30px);
+    position: absolute;
+    height: 30px;
+    padding-right: 10px;
+    width: calc(100% - 10px);
+    display:flex;
+    justify-content: right;
+    align-items: center;
+    color:#ccc;
+    justify-self: end;
+}
+img{
+    background: #eee;
+    border-radius: 20px;
+}
+.cut{
+    width: calc(98% - 20px);
+    padding: 10px 20px 10px 10px;
+    color:#fff;
+    padding: 5px;
+    text-align: right;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+.text{
+    margin: 100px 0px 0 10px;
+    font-weight: bolder;
+}
+.cut-btn{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    padding-bottom: 3px;
+    background: #333;
+    transition: .3s;
+    box-shadow: none;
+}
+.cut-btn:hover{
+    background-color: #ccc;
+    transition: .3s;
+    color:#000;
+}
+ .mic-image{
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+ }
+img{
+padding: 2.5px;}
+.circle{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-left: calc(50% - 100px);
+            margin-top: calc(40% - 200px);
+            background-color: #fff;
+            box-shadow: 
+                inset 0 0 50px #fff,
+                inset 20px 0 60px #ff00ff,
+                inset -20px 0 60px ,
+                inset 20px 0 300px #ff00ff,
+                0 0 50px #fff,
+                -10px 0 60px #ff00ff,
+                10px 0 60px  #0044ff;
+                animation: spin 4s linear infinite, pulse 2s ease-in-out infinite;
+                position: relative;
+        }
+        @keyframes spin{
+            0%{ transform: rotate(0deg);}
+            100%{ transform: rotate(360deg);}
+        }
+        @keyframes pulse {
+            50%{
+                box-shadow: 
+                inset 0 0 100px #fff,
+                inset 40px 0 120px #ff00ff,
+                inset -40px 0 120px #0044ff,
+                inset 40px 0 600px #ff00ff,
+                0 0 100px #fff,
+                -20px 0 120px #ff00ff,
+                20px 0 120px #0044ff;
+            }
+            
+        }
+        @keyframes sppin{
+            0%{ transform: rotate(0deg);}
+            100%{ transform: rotate(360deg);}
+        }
+        @keyframes pullse {
+            0%{
+                box-shadow: 
+                inset 0 0 100px #fff,
+                inset 40px 0 120px #ff00ff,
+                inset -40px 0 120px #0044ff,
+                inset 40px 0 600px #ff00ff,
+                0 0 50px #fff,
+                -20px 0 120px #ff00ff,
+                20px 0 120px #0044ff;
+            }
+            100%{
+                box-shadow: 
+                inset 0 0 100px #fff,
+                inset 40px 0 120px #ff00ff,
+                inset -40px 0 120px #0044ff,
+                inset 40px 0 600px #ff00ff,
+                0 0 50px #fff,
+                -20px 0 120px #ff00ff,
+                20px 0 120px #0044ff;
+            }
+            
+        }
+
+        .response-container {
+            margin-top: calc(-100vh + 100px);
+            position: absolute;
+            padding: 10px 20px;
+            max-height: calc(80vh - 60px);
+            width: 90%;
+            color: #fff;
+            background: none;
+            line-height: 1.5;
+            display: flex;
+            align-items: unset;
+            flex-direction: column;
+            z-index: -1;
+            overflow-y: scroll;
+           
+        }
+        .response-container::-webkit-scrollbar{
+            width: 5px;
+            height: 5px;
+        }
+        .response-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg,#be3bbe,#0044ff); /* Scrollbar color */
+  border-radius: 4px;
+}
+
+.response-container::-webkit-scrollbar-track {
+  background: transparent; /* Track color */
+}
+        .response-container p:nth-child(1){
+            background: #4446;
+            transition:width .5s;
+            text-align: center;
+            font-size: 15px;
+            position: sticky;
+            border-radius: 15px;
+            padding: 5px 10px;
+            box-shadow: 0px 5px 10px #333;
+        }
+.left{
+    padding: 5px 15px;
+    align-self: flex-start;
+    border-radius: 0px 20px 20px 20px;
+    text-align: left;
+    background: linear-gradient(90deg,#008cff,#be3bbe);
+    color:#fff;
+}
+.right{
+    padding: 5px 15px;
+    align-self: flex-end;
+    background: linear-gradient(90deg,#87ffb5,#68a3fc);
+    color: #000;
+    text-align: right;
+    font-weight: bolder;
+    border-radius: 20px 0px 20px 20px ;
+
+}
+    </style>
+</head>
+<body id="bd">
+    
+<div class="mic-option" id="mic-op">
+    <div class="cut"> <button class="cut-btn" onclick="hide()">&#10006;</button> </div>
+    <div class="animation">
+    <div class="circle" id="cir"> </div>
+    <div class="text" id="mic-output"> Hello There...</div>
+    </div>
+    <div class="button">  <img src="./Image/microp.png" id="mic-img"  width="35px" alt="" onclick="show(this)"></div>
+</div>
+<div class="response-container" id="response-c">
+    <p id="otpt">Hello! How can I assist you today?</p>
+</div>
+    <div class="input-bar">
+       <input type="text" list="prompt" autofocus id="inputtext" placeholder="Ask anything..."> 
+       <datalist id="prompt">
+        <option value="open youtube">open youtube</option>
+        <option value="search w3school">search w3school</option>
+        <option value="my name">my name</option>
+        <option value="change my name">change my name</option>
+        <option value="set background color white">set background color white</option>
+        <option value="Answer of 5*8">Answer of 5*8</option>
+        <option value="change background image">change background image</option>
+        <option value="Hello Jarvis">Hello Jarvis</option>
+        <option value="create a new file">create a new file</option>
+        <option value="Today's date">Date</option>
+        <option value="Show my charging">Show my charging</option>
+        <option value="remove charging icon">remove charging icon</option>
+        </datalist> 
+       <button class="submit" id="start" onclick="speak()">&#10148; </button>
+        <div style="width: 30px;"> </div>
+
+
 </body>
 </html>
